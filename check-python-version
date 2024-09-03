@@ -1,0 +1,15 @@
+#!/bin/bash
+
+v1=3.6
+v2=3.6.1
+
+vers1=`printf "%03d%03d%03d%03d" $(echo "$v1" | tr '.' ' ')`
+vers2=`printf "%03d%03d%03d%03d" $(echo "$v2" | tr '.' ' ')`
+
+if ! [[ "${vers2}" < "${vers1}" ]] 
+then
+	echo "Ok: python version ${v2} is at least ${v1}"
+else
+	echo "Error: python version ${v2} must be at least ${v1}"
+fi
+

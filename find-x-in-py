@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ $# != 1 ]; then
+   echo "usage: $0 <find_phrase>";
+   exit 1
+fi
+
+find_phrase=$1
+
+find . -type f -name "*.py" -exec grep -Hn "${find_phrase}" "{}" ";"  | grep -v env

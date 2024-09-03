@@ -1,0 +1,24 @@
+#!/bin/zsh
+
+# Check if a parameter is provided
+if [ -z "$1" ]; then
+    echo "Usage: $0 <directory>"
+    exit 1
+fi
+
+# Directory to add to PATH
+DIR_TO_ADD="$1"
+
+# Check if the directory exists and is readable
+if [ ! -d "$DIR_TO_ADD" ] || [ ! -r "$DIR_TO_ADD" ]; then
+    echo "Error: Directory '$DIR_TO_ADD' does not exist or is not readable."
+    exit 1
+fi
+
+# Check if the directory is already in PATH
+if [[ ":$PATH:" != *":$DIR_TO_ADD:"* ]]; then
+    export PATH="$DIR_TO_ADD:$PATH"
+    echo "Directory '$DIR_TO_ADD' added to PATH."
+else
+    echo "Directory '$DIR_TO_ADD' is already in PATH."
+fi

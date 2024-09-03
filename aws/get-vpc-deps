@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# adapted from https://stackoverflow.com/a/63377166/4607079
+
+# check for required args 
+if [[ $# != 2 ]]; then
+  echo "usage: $0 <vpc-id> <profile>"
+  exit 1
+fi
+
+vpc_id=$1
+profile=$2
+
+# check for required format: "vpc-xxxxxxxxxxxxx" 
+if [[ $vpc_id != vpc-* ]]; then
+  echo "ERROR: <vpc-id> must start with vpc-"
+  exit 1
+fi
+
+rm -f /tmp/out
+
+echo "vpc-id: $vpc_id" | tee -a /tmp/out
+echo "profile: $profile" | tee -a /tmp/out
+echo "region:"         $(aws --profile $profile configure get region ) | tee -a /tmp/out
+echo "vpc-cidr-block:" $(aws --profile $profile ec2 --output text --query 'Vpcs[*].{VpcId:VpcId,Name:Tags[?Key==`Name`].Value|[0],CidrBlock:CidrBlock}' describe-vpcs) | awk '{print $1,$2}' | tee -a /tmp/out
+echo "vpc-name:"       $(aws --profile $profile ec2 --output text --query 'Vpcs[*].{VpcId:VpcId,Name:Tags[?Key==`Name`].Value|[0],CidrBlock:CidrBlock}' describe-vpcs) | awk '{print $1,$3}' | tee -a /tmp/out
+aws --profile $profile ec2 describe-internet-gateways --filters Name=attachment.vpc-id,Values=$vpc_id | grep InternetGatewayId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-route-tables --filters Name=vpc-id,Values=$vpc_id | grep  RouteTableId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-network-acls --filters Name=vpc-id,Values=$vpc_id | grep NetworkAclId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-vpc-peering-connections --filters Name=requester-vpc-info.vpc-id,Values=$vpc_id | grep VpcPeeringConnectionId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-vpc-endpoints --filters Name=vpc-id,Values=$vpc_id | grep VpcEndpointId | sed 's/ //g'| tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-nat-gateways --filter Name=vpc-id,Values=$vpc_id | grep NatGatewayId | sed 's/ //g'| tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-security-groups --filters Name=vpc-id,Values=$vpc_id | grep GroupId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-instances --filters Name=vpc-id,Values=$vpc_id | grep InstanceId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-vpn-connections --filters Name=vpc-id,Values=$vpc_id | grep VpnConnectionId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-vpn-gateways --filters Name=attachment.vpc-id,Values=$vpc_id | grep VpnGatewayId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+aws --profile $profile ec2 describe-network-interfaces --filters Name=vpc-id,Values=$vpc_id | grep NetworkInterfaceId | sed 's/ //g' | tr -d '"' | tr -d ',' | tee -a /tmp/out
+echo 
+echo "uniqified"
+echo 
+cat /tmp/out | uniq
+echo ""

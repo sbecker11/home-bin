@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# != 2 ]; then
+   echo "usage: $0 <find_phrase> <'all'|file_suffix>";
+   exit 1
+fi
+
+find_phrase=$1
+file_suffix=$2
+
+if [ "$file_suffix" == "all" ]; then
+    echo "find . -type f -exec grep -Hn \"${find_phrase}\" \"{}\" \";\" | grep -v env"
+    find . -type f -exec grep -Hn "${find_phrase}" "{}" ";" | grep -v env
+else
+    echo "find . -type f -name \"*.${file_suffix}\" -exec grep -Hn \"${find_phrase}\" \"{}\" \";\" | grep -v env"
+    find . -type f -name "*.${file_suffix}" -exec grep -Hn "${find_phrase}" "{}" ";" | grep -v env
+fi

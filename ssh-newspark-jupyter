@@ -1,0 +1,7 @@
+#!/bin/bash
+
+ip=`cat ~/.ec2/newspark.ip`
+
+ssh -i "~/.ec2/newspark.pem" ubuntu@${ip} -L 8888:127.0.0.1:8888
+
+

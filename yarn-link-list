@@ -1,0 +1,16 @@
+#!/bin/bash
+
+yll () {
+	current=$PWD
+	link_home="$HOME/.config/yarn/link"
+	echo "link_home:${link_home}"
+	for link in $(find ${link_home} -type l)
+	do
+		cd $link"/../"$(readlink $link)
+		echo $link $'\n==>' $PWD 
+		echo ""
+	done
+	cd $current
+}
+
+yll

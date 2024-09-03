@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# != 2 ]; then
+   echo "usage: $0 <find_phrase> <file_name>";
+   exit 1
+fi
+
+find_phrase=$1
+file_name=$2
+
+find . -type f -name "${file_name}" -exec grep -Hn "${find_phrase}" "{}" ";" | grep -v env

@@ -1,0 +1,59 @@
+#!/bin/sh
+
+# Get the Python in the current PATH
+current_python=$(which python 2>/dev/null)
+
+# Find Python versions, sort them, and remove duplicates while keeping full paths
+pythons=$(ls -1 /usr/bin/python* /usr/local/bin/python* 2>/dev/null | grep -E "^.+python([2-3](\.[0-9]+)?)?$" | sort -V)
+
+if [ -z "$pythons" ]; then
+    echo "No Python versions found." >&2
+    if [ -n "$current_python" ]; then
+        echo "$current_python"
+        exit 0
+    else
+        exit 1
+    fi
+fi
+
+echo "Available Python versions:" >&2
+i=1
+echo "$pythons" | while IFS= read -r python; do
+    # Get version information
+    version=$("$python" --version 2>&1 | awk '{print $2}')
+    if [ "$python" = "$current_python" ]; then
+        printf "%2d) * %-40s (current, version %s)\n" $i "$python" "$version" >&2
+    else
+        printf "%2d)   %-40s (version %s)\n" $i "$python" "$version" >&2
+    fi
+    i=$((i+1))
+done
+echo " q) Quit (use current: $current_python)" >&2
+
+while true; do
+    printf "Enter your choice (1-%d or q to quit): " $(echo "$pythons" | wc -l) >&2
+    read choice
+    case $choice in
+        [qQ])
+            if [ -n "$current_python" ]; then
+                echo "$current_python"
+                exit 0
+            else
+                echo "No current Python found. Exiting..." >&2
+                exit 1
+            fi
+            ;;
+        [1-9]|[1-9][0-9])
+            selected=$(echo "$pythons" | sed -n "${choice}p")
+            if [ -n "$selected" ]; then
+                echo "$selected"
+                exit 0
+            else
+                echo "Invalid option. Try again." >&2
+            fi
+            ;;
+        *)
+            echo "Invalid option. Try again." >&2
+            ;;
+    esac
+done

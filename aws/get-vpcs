@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# check for required args
+if [ "$#" != "1" ]; then 
+  echo "usage: $0 <profile>"
+  exit
+fi
+
+profile=$1
+aws ec2 --profile $profile --output text --query 'Vpcs[*].{VpcId:VpcId,Name:Tags[?Key==`Name`].Value|[0],CidrBlock:CidrBlock}' describe-vpcs > /tmp/get-vpcs-out
+cat /tmp/get-vpcs-out
