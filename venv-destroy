@@ -1,0 +1,22 @@
+#!/bin/sh
+
+if [ ! -d "venv" ]; then
+  echo "local venv folder not found"
+  exit 1
+fi
+if [ -d "requirements.txt" ]; then
+  read -p "Do you want to backup requirements.txt? (y/n) " answer
+  if [ "$answer" = "y" ]; then
+    mv requirements.txt requirements.txt.bak
+    echo "requirements.txt backed up to requirements.txt.bak"
+  fi
+fi
+read -p "Ready to destroy the venv folder? (y/n) " answer
+if [ "$answer" = "y" ]; then
+  rm -rf venv bin include lib pyvenv.cfg
+  echo "venv and related folders destroyed"
+  # don't care if it's not activated
+  deactivate 2> /dev/null
+fi
+
+# this script is the invert of alias venv-make

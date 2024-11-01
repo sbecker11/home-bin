@@ -4,6 +4,10 @@ if [ -d "venv" ]; then
   echo "venv already exists, use venv-activate";
 fi
 pythonPath=$(choose-python)
+if [ "$?" != "0" ]; then
+  echo "no python version selected. exiting";
+  exit 1;
+fi
 if [ "$?" == "0" ]; then
   echo "installing venv with ${pythonPath}";
   $pythonPath -m venv venv; 
