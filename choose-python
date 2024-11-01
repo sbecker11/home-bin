@@ -18,11 +18,13 @@ fi
 
 echo "Available Python versions:" >&2
 i=1
+default_choice=0
 echo "$pythons" | while IFS= read -r python; do
     # Get version information
     version=$("$python" --version 2>&1 | awk '{print $2}')
     if [ "$python" = "$current_python" ]; then
         printf "%2d) * %-40s (current, version %s)\n" $i "$python" "$version" >&2
+        default_choice=$i
     else
         printf "%2d)   %-40s (version %s)\n" $i "$python" "$version" >&2
     fi
@@ -31,15 +33,18 @@ done
 echo " q) Quit (use current: $current_python)" >&2
 
 while true; do
-    printf "Enter your choice (1-%d or q to quit): " $(echo "$pythons" | wc -l) >&2
+    printf "Enter your choice (1-%d or q to quit) [default: %d]: " $(echo "$pythons" | wc -l) $default_choice >&2
     read choice
+    if [ -z "$choice" ]; then
+        choice=$default_choice
+    fi
     case $choice in
         [qQ])
             if [ -n "$current_python" ]; then
                 echo "$current_python"
                 exit 0
             else
-                echo "No current Python found. Exiting..." >&2
+                # echo "No Python version selected. Exiting..." >&2
                 exit 1
             fi
             ;;
