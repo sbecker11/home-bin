@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 # Get the Python in the current PATH
 current_python=$(which python 2>/dev/null)
@@ -19,7 +19,10 @@ fi
 echo "Available Python versions:" >&2
 i=1
 default_choice=0
-echo "$pythons" | while IFS= read -r python; do
+
+# Use a while loop with process substitution so default_choice will
+# retain its new value outside the while loop
+while IFS= read -r python; do
     # Get version information
     version=$("$python" --version 2>&1 | awk '{print $2}')
     if [ "$python" = "$current_python" ]; then
@@ -29,11 +32,12 @@ echo "$pythons" | while IFS= read -r python; do
         printf "%2d)   %-40s (version %s)\n" $i "$python" "$version" >&2
     fi
     i=$((i+1))
-done
-echo " q) Quit (use current: $current_python)" >&2
+done < <(echo "$pythons")
+
+echo " q) Quit (use current: $current_python or default:${default_choice})" >&2
 
 while true; do
-    printf "Enter your choice (1-%d or q to quit) [default: %d]: " $(echo "$pythons" | wc -l) $default_choice >&2
+    printf "Enter your choice (1-%d or q to quit) [default: %d]: " "9" "${default_choice}" >&2
     read choice
     if [ -z "$choice" ]; then
         choice=$default_choice
@@ -51,6 +55,7 @@ while true; do
         [1-9]|[1-9][0-9])
             selected=$(echo "$pythons" | sed -n "${choice}p")
             if [ -n "$selected" ]; then
+                # caller must use this echo'ed value 
                 echo "$selected"
                 exit 0
             else
