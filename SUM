@@ -1,0 +1,17 @@
+#!/bin/bash
+
+# reads one line at a time
+# and outputs the index and the running sum of numbers
+SUM() {
+  local sum=0
+  local index=0
+  while IFS= read -r line; do
+    sum=$((sum + line))
+    index=$((index + 1))
+    ratio=$(echo $sum/$index | bc -S 2)
+    echo "Files: $index Lines: $sum Lines/File: ${ratio}"
+  done
+}
+
+SUM
+
