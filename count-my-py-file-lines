@@ -20,12 +20,11 @@ ignore_paths=(
     "spyder-"
     "anthropic/courses"
     "env/bin"
-    "dh-consumer/tests"
     "vela-schema-registry-old"
-    "serializer/.tox"
-    "/old/"
+    "tox"
+    "old"
     "workspace-keep"
-    "keep/"
+    "keep"
     ".hg-git"
     "pgAdmin"
     "tokenator"
@@ -37,6 +36,12 @@ ignore_paths=(
     "usr-local-bin"
 )
 
+# create the grep_ignore_filter
+grep_ignore_filter="grep -v -E 'xx"
+for ignore_path in "${ignore_paths[@]}"; do
+    grep_ignore_filter+="|${ignore_path}"
+done
+grep_ignore_filter="${grep_ignore_filter}'"
 
 if [ $filter_type == "find" ]; then
     echo "Finding all python files in the current directory and subdirectories, except for ignored_paths."
@@ -44,68 +49,67 @@ if [ $filter_type == "find" ]; then
     # Remove the temporary file if it exists
     rm -f ${MY_PY_FILE_LINES_FILE}
 
+    # define the status and lines_file
+    status="find results"
+    lines_file="${MY_PY_FILE_LINES_FILE}"
+
     # Use find to search up to 5 layers deep to list
     # python files owned by the current user
-    find_command="find . -type f -name '*.py' -user $(id -u)  -maxdepth 5"
+    # and append the grep_ignore_filter
+    command="find . -type f -name '*.py' -user $(id -u)  -maxdepth 5 "
 
-    # append the ignore paths to the find command
-    for ignore_path in "${ignore_paths[@]}"; do
-        find_command+=" ! -path '*/${ignore_path}/*'"
-    done
+    # evaluate the command and store the unfiltered results into the lines_file
+    eval "${command} -exec wc -l {} \;" | awk '{print $2, $1}' > ${lines_file};
 
-    # Execute the find command and count lines
-    eval "$find_command -exec wc -l {} \; 2> /dev/null" | awk '{print $2, $1}' | tee -a ${MY_PY_FILE_LINES_FILE}
-
-    # Print the results
-    total_files=$(wc -l ${MY_PY_FILE_LINES_FILE}) | tr -d ' '
-    total_lines=$(awk '{sum+=$2} END {print sum}' ${MY_PY_FILE_LINES_FILE}) | tr -d ' '
+    # calculate the find results
+    total_files=$(cat "${lines_file}" | wc -l | tr -d ' ' )
+    total_lines=$(awk '{sum+=$2} END {print sum}' "${lines_file}" | tr -d ' ' ) 
     avg_lines_per_file=$(echo "$total_lines / $total_files" | bc -S 2)
-
-    echo "Results tallied from ${MY_PY_FILE_LINES_FILE}"
-    
-    echo "Total files: $total_files"
-    echo "Total lines: $total_lines"
-    echo "Lines/File:  $avg_lines_per_file"
+    echo "${status} tallied from ${lines_file}"
+    echo "Total files $status: $total_files"
+    echo "Total lines $status: $total_lines"
+    echo "Lines/File  $status: $avg_lines_per_file"
 fi
 
 # use the latest version of the ignore_paths to re-filter
 # ${MY_PY_FILE_LINES_FILE} and store it to
 # ${MY_PY_FILE_LINES_FILTERED_FILE}
 if [ $filter_type == "file" ]; then
-    if [ -n ${MY_PY_FILE_LINES_FILE} ]; then
+    echo "Filtering the results from ${MY_PY_FILE_LINES_FILE} using the latest ignore paths."
+    if [ ! -f "${MY_PY_FILE_LINES_FILE}" ]; then
         echo "Error: ${MY_PY_FILE_LINES_FILE} does not exist. Run the find command first by setting filter_type=find"
         exit 1
     fi
+    # define the status and the lines_file
+    status="pre-filtered results"
+    lines_file="${MY_PY_FILE_LINES_FILE}"
 
-    total_files=$(wc -l ${MY_PY_FILE_LINES_FILE}) | tr -d ' '
-    total_lines=$(awk '{sum+=$2} END {print sum}' ${MY_PY_FILE_LINES_FILE}) | tr -d ' '
+    # calculate the pre-filtered results
+    total_files=$(cat "${lines_file}" | wc -l | tr -d ' ' )
+    total_lines=$(awk '{sum+=$2} END {print sum}' "${lines_file}" | tr -d ' ' ) 
     avg_lines_per_file=$(echo "$total_lines / $total_files" | bc -S 2)
+    echo "${status} tallied from ${lines_file}"
+    echo "Total files $status: $total_files"
+    echo "Total lines $status: $total_lines"
+    echo "Lines/File  $status: $avg_lines_per_file"
 
-    echo "Pre-filtered results tallied from ${MY_PY_FILE_LINES_FILE}"
+    # define the filtered command
+    command="cat ${lines_file} | ${grep_ignore_filter}"
 
-    echo "Total files pre-filtered: $total_files"
-    echo "Total lines pre-filtered: $total_lines"
-    echo "Lines/File  pre-filtered: $avg_lines_per_file"
+    # Execute the command and store the results
+    lines_file="${MY_PY_FILE_LINES_FILTERED_FILE}"
+    eval "${command} > ${lines_file}"
 
-    # processing the results from the above find command
-    find_command="cat ${MY_PY_FILE_LINES_FILE} "
+    # calculate the pre-filtered results
+    status="post-filtered results"
+    lines_file="${MY_PY_FILE_LINES_FILTERED_FILE}"
 
-    # Append the latest version of the ignore paths to the command
-    for ignore_path in "${ignore_paths[@]}"; do
-        find_command+=" ! -path '*/${ignore_path}/*'"
-    done
-
-    echo "find command: $find_command"
-    eval "$find_command > ${MY_PY_FILE_LINES_FILTERED_FILE}"
-
-    total_files=$(wc -l ${MY_PY_FILE_LINES_FILTERED_FILE}) | tr -d ' '
-    total_lines=$(awk '{sum+=$2} END {print sum}' ${MY_PY_FILE_LINES_FILTERED_FILE}) | tr -d ' '
+    total_files=$(cat "${lines_file}" | wc -l | tr -d ' ' )
+    total_lines=$(awk '{sum+=$2} END {print sum}' "${lines_file}" | tr -d ' ' ) 
     avg_lines_per_file=$(echo "$total_lines / $total_files" | bc -S 2)
-
-    echo "Post-filtered results tallied from ${MY_PY_FILE_LINES_FILTERED_FILE}"
-
-    echo "Total files post-filtered: $total_files"
-    echo "Total lines post-filtered: $total_lines"
-    echo "Lines/File  post-filtered: $avg_lines_per_file"
+    echo "${status} tallied from ${lines_file}"
+    echo "Total files $status: $total_files"
+    echo "Total lines $status: $total_lines"
+    echo "Lines/File  $status: $avg_lines_per_file"
 
 fi
