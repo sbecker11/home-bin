@@ -1,0 +1,2 @@
+#!/bin/bash
+find . -maxdepth 5 -name "*.py"  | grep -v "gradio" | grep -v "vscode" | grep -v "git" | grep -v "old" | grep -v "keep" | grep -v "example" | grep -v "venv" 

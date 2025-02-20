@@ -1,0 +1,42 @@
+#!/bin/bash
+
+# This script generates a 3-column text file with ASCII background color codes, their names, and sample text
+
+echo -e "Code\tName\t\t\t\tSample Text" > ascii_bg_colors.txt
+echo "----------------------------------------------------" >> ascii_bg_colors.txt
+
+# Function to add background color with name to the file
+add_bg_color() {
+    local code=$1
+    local name=$2
+    local fg_color=$3  # Foreground color code
+    if [ "$code" == "103" ] || [ "$code" == "105" ]; then
+        echo -e "$code\t$name\t\033[${fg_color}m\033[${code}m Sample Text \033[0m" >> ascii_bg_colors.txt
+    elif [ "$code" == "41" ] || [ "$code" == "44" ] || [ "$code" == "46" ]; then
+        echo -e "$code\t$name\t\t\t\033[${fg_color}m\033[${code}m Sample Text \033[0m" >> ascii_bg_colors.txt
+    else
+        echo -e "$code\t$name\t\t\033[${fg_color}m\033[${code}m Sample Text \033[0m" >> ascii_bg_colors.txt
+    fi
+}
+
+# Regular background colors
+add_bg_color "40" "Black Background"           "1;37"  # White text on black
+add_bg_color "41" "Red Background"             "1;30"  # Black text on red
+add_bg_color "42" "Green Background"           "1;30"  # Black text on green
+add_bg_color "43" "Yellow Background"          "1;30"  # Black text on yellow
+add_bg_color "44" "Blue Background"            "1;37"  # White text on blue
+add_bg_color "45" "Magenta Background"         "1;30"  # Black text on magenta
+add_bg_color "46" "Cyan Background"            "1;30"  # Black text on cyan
+add_bg_color "47" "White Background"           "1;30"  # Black text on white
+
+# High Intensity background colors with dark foreground colors
+add_bg_color "100" "Bright Black Background"   "1;37"  # White text on bright black
+add_bg_color "101" "Bright Red Background"     "1;30"  # Black text on bright red
+add_bg_color "102" "Bright Green Background"   "1;30"  # Black text on bright green
+add_bg_color "103" "Bright Yellow Background"  "1;30"  # Black text on bright yellow
+add_bg_color "104" "Bright Blue Background"    "1;37"  # White text on bright blue
+add_bg_color "105" "Bright Magenta Background" "1;30"  # Black text on bright magenta
+add_bg_color "106" "Bright Cyan Background"    "1;30"  # Black text on bright cyan
+add_bg_color "107" "Bright White Background"   "1;30"  # Black text on bright white
+
+echo "ASCII background color codes have been written to ascii_bg_colors.txt"

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+# Print usage guide
+usage() {
+    echo "Usage: $0 [-l] <directory>"
+    echo "  -l  List only, no prompts"
+    exit 1
+}
+
+# Parse options
+list_only=false
+
+while getopts "l" opt; do
+    case "$opt" in
+        l) list_only=true ;;
+        *) usage ;;
+    esac
+done
+
+# Shift parsed options
+shift $((OPTIND - 1))
+
+# Check if directory argument is provided
+if [ -z "$1" ]; then
+    usage
+fi
+
+directory="$1"
+
+# Verify that the provided path is a valid directory
+if [ ! -d "$directory" ]; then
+    echo "Error: '$directory' is not a directory"
+    exit 1
+fi
+
+# Find and handle empty directories
+find "$directory" -type d -empty | while IFS= read -r dir; do
+    if [ "$list_only" = true ]; then
+        echo "$dir"
+    else
+        read -rp "Empty directory found: $dir. Delete it? (y/n) " choice < /dev/tty
+        if [[ "$choice" =~ ^[yY]$ ]]; then
+            echo "rm -r $dir" && echo "Deleted: $dir"
+        else
+            echo "Skipped: $dir"
+        fi
+    fi
+done

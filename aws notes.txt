@@ -1,0 +1,23 @@
+Platform Perspective:
+help builldan enterprise-grade, scalable, hybrid cloud platform, 
+modernizing existing workloads, 
+implement new cloud native solutions,
+data engineering
+CI/CD
+
+Platform architecture:
+Establish and maintain guidelines, principals, patterns, and guardrails
+
+Platform engineering
+build a complient multi-account cloud environment with enhanced security features, and packaged re-usable cloud produts
+
+Platform operations:
+manage and optimize your cloud environment with automation, monitoring, and incident response
+
+Application development:
+develop and deploy cloud-native aplications. using mmodern architectures and best practices
+
+Application migration:
+migrate existing applications to the lcloud uwing proven methodologies and tools
+
+Performance and capacity management, infrastructure protection, 

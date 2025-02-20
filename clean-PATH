@@ -1,0 +1,38 @@
+#!/bin/zsh
+
+# Function to remove duplicate paths from PATH and output removed paths
+remove_duplicate_paths() {
+    # Split PATH into an array
+    local IFS=':'
+    local path_array=($PATH)
+    
+    # Use associative array to filter out duplicates
+    local -A seen
+    local unique_paths=()
+    local removed_paths=()
+    
+    for path in "${path_array[@]}"; do
+        if [[ -z "${seen[$path]}" ]]; then
+            unique_paths+=("$path")
+            seen[$path]=1
+        else
+            removed_paths+=("$path")
+        fi
+    done
+    
+    # Join unique paths back into a single string
+    PATH=$(IFS=:; echo "${unique_paths[*]}")
+    
+    # Output removed paths
+    if [[ ${#removed_paths[@]} -gt 0 ]]; then
+        echo "Removed duplicate paths:"
+        for path in "${removed_paths[@]}"; do
+            echo "$path"
+        done
+    else
+        echo "No duplicate paths found."
+    fi
+}
+
+# Call the function to remove duplicate paths
+remove_duplicate_paths

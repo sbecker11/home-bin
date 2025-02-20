@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# This script is useful for developers who use Yarn and 
+# need to quickly navigate and inspect the symbolic links 
+# created by Yarn in their configuration directory.
+
+yll () {
+	current=$PWD
+	link_home="$HOME/.config/yarn/link"
+	echo "link_home:${link_home}"
+	for link in $(find ${link_home} -type l)
+	do
+		cd $link"/../"$(readlink $link)
+		echo $link $'\n==>' $PWD 
+		echo ""
+	done
+	cd $current
+}
+
+yll

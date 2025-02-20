@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# Get the Python in the current PATH
+current_python=$(which python 2>/dev/null)
+if [ -n $current_python ]; then
+    current_pythons=$(ls $current_python* | tr '\n' ' ')
+fi
+
+echo "Searching for installed Python versions: ..." >&2
+sleep 2
+pythons=$(ls -1 /usr/bin/python* /usr/local/bin/python* $current_pythons 2>/dev/null | grep -E "^.+python([2-3](\.[0-9]+)?)?$" | sort -V | uniq)
+
+numPythons=$(echo $pythons | wc -l  | tr -d ' ')
+if [[ $numPythons == 0 ]]; then
+    echo "No Python versions found." >&2
+    if [ -n "$current_python" ]; then
+        echo "$current_python"
+        exit 0
+    else
+        exit 1
+    fi
+fi
+
+echo "Choose an installed Python version:" >&2
+
+# Use a while loop with process substitution so default_choice will
+# retain its new value outside the while loop
+i=1
+default_choice=0
+current_python_short="${current_python/#$HOME/~}"
+while IFS= read -r python; do
+    # Get version information
+    version=$("$python" --version 2>&1 | awk '{print $2}')
+    openssl_version=$($python -c "import ssl; print(ssl.OPENSSL_VERSION)" 2>/dev/null)
+    if [ $? -eq 0 ]; then
+        python_short="${python/#$HOME/~}"
+        if [ "$python" = "$current_python" ]; then
+            printf "%2d) * %-27s current, version %-7s (%s)\n" $i "$python_short" "$version" "$openssl_version" >&2
+            default_choice=$i
+        else
+            printf "%2d)   %-27s          version %-7s (%s)\n" $i "$python_short" "$version" "$openssl_version" >&2
+        fi
+        i=$((i+1))
+    fi
+done < <(echo "$pythons")
+
+echo " q) Quit (use current: $current_python_short or default:${default_choice})" >&2
+
+while true; do
+    printf "Enter your choice (1-%d or q to quit) [default: %d]: " "9" "${default_choice}" >&2
+    read choice
+    if [ -z "$choice" ]; then
+        choice=$default_choice
+    fi
+    case $choice in
+        [qQ])
+            if [ -n "$current_python_short" ]; then
+                echo "$current_python_short"
+                exit 0
+            else
+                # echo "No Python version selected. Exiting..." >&2
+                exit 1
+            fi
+            ;;
+        [1-9]|[1-9][0-9])
+            selected=$(echo "$pythons" | sed -n "${choice}p")
+            if [ -n "$selected" ]; then
+                # caller will use this echo'ed value
+                echo "$selected"
+                exit 0
+            else
+                echo "Invalid option. Try again." >&2
+            fi
+            ;;
+        *)
+            echo "Invalid option. Try again." >&2
+            ;;
+    esac
+done

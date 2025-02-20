@@ -1,0 +1,26 @@
+// template.json
+{
+  "application": {
+    "name": "${APP_NAME}",
+    "version": "${VERSION}",
+    "environment": "${ENV}"
+  },
+  "database": {
+    "host": "${DB_HOST}",
+    "port": ${DB_PORT},
+    "username": "${DB_USER}",
+    "password": "${DB_PASSWORD}",
+    "name": "${DB_NAME}"
+  },
+  "aws": {
+    "region": "${AWS_REGION}",
+    "bucket": "${S3_BUCKET}",
+    "accessKey": "${AWS_ACCESS_KEY}",
+    "secretKey": "${AWS_SECRET_KEY}"
+  },
+  "api": {
+    "endpoint": "${API_ENDPOINT}",
+    "timeout": ${API_TIMEOUT},
+    "maxRetries": ${MAX_RETRIES}
+  }
+}

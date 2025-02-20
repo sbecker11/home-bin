@@ -1,0 +1,26 @@
+Code	Name		Sample Text
+----------------------------------------------------
+0;30	Black		[0;30mSample Text[0m
+0;31	Red		[0;31mSample Text[0m
+0;32	Green		[0;32mSample Text[0m
+0;33	Yellow		[0;33mSample Text[0m
+0;34	Blue		[0;34mSample Text[0m
+0;35	Magenta		[0;35mSample Text[0m
+0;36	Cyan		[0;36mSample Text[0m
+0;37	White		[0;37mSample Text[0m
+1;30	Bold Black	[1;30mSample Text[0m
+1;31	Bold Red	[1;31mSample Text[0m
+1;32	Bold Green	[1;32mSample Text[0m
+1;33	Bold Yellow	[1;33mSample Text[0m
+1;34	Bold Blue	[1;34mSample Text[0m
+1;35	Bold Magenta	[1;35mSample Text[0m
+1;36	Bold Cyan	[1;36mSample Text[0m
+1;37	Bold White	[1;37mSample Text[0m
+0;90	Bright Black	[0;90mSample Text[0m
+0;91	Bright Red	[0;91mSample Text[0m
+0;92	Bright Green	[0;92mSample Text[0m
+0;93	Bright Yellow	[0;93mSample Text[0m
+0;94	Bright Blue	[0;94mSample Text[0m
+0;95	Bright Magenta	[0;95mSample Text[0m
+0;96	Bright Cyan	[0;96mSample Text[0m
+0;97	Bright White	[0;97mSample Text[0m

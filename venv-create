@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ -d "venv" ]; then
+  echo "venv already exists, use venv-activate";
+fi
+pythonPath=$(venv-choose-python-version)
+if [ "$?" != "0" ]; then
+  echo "no python version selected. exiting";
+  exit 1;
+fi
+if [ "$?" == "0" ]; then
+  echo "installing venv with ${pythonPath} -m venv venv";
+  $pythonPath -m venv venv;
+  echo "activating venv/bin/activate";
+  source venv/bin/activate;
+  echo "upgrading pip with ${pythonPath} -m pip install --upgrade pip";
+  $pythonPath -m pip install --upgrade pip;
+  if [ -f "requirements.txt" ]; then
+    echo "installing requirements"
+    $pythonPath -m pip install -r requirements.txt;
+  fi
+fi
+
+# this script is used in the venv-make alias defined as
+# alias venv-make="venv-create && source venv/bin/activate"

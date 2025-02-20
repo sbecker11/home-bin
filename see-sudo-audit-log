@@ -1,0 +1,2 @@
+sudo log show --predicate 'senderImagePath contains "sudo"'
+

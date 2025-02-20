@@ -1,0 +1,1 @@
+sudo dseditgroup -o edit -a $USERNAME -t user admin

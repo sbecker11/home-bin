@@ -1,0 +1,56 @@
+#!/bin/bash
+
+# This script generates a 3-column text file with ASCII color codes, their names, and sample text
+
+echo -e "Code\tName\t\tSample Text" > ascii_colors.txt
+echo "----------------------------------------------------" >> ascii_colors.txt
+
+# Function to add color with name to the file
+add_color() {
+    local code=$1
+    local name=$2
+    local extra_tab=$3
+    echo -e "$code\t$name$extra_tab\t\033[${code}mSample Text\033[0m" >> ascii_colors.txt
+}
+
+# Regular colors
+add_color "0;30" "Black" "\t"
+add_color "0;31" "Red" "\t"
+add_color "0;32" "Green" "\t"
+add_color "0;33" "Yellow" "\t"
+add_color "0;34" "Blue" "\t"
+add_color "0;35" "Magenta" "\t"
+add_color "0;36" "Cyan" "\t"
+add_color "0;37" "White" "\t"
+
+# Bold colors
+add_color "1;30" "Bold Black" ""
+add_color "1;31" "Bold Red" ""
+add_color "1;32" "Bold Green" ""
+add_color "1;33" "Bold Yellow" ""
+add_color "1;34" "Bold Blue" ""
+add_color "1;35" "Bold Magenta" ""
+add_color "1;36" "Bold Cyan" ""
+add_color "1;37" "Bold White" ""
+
+# High Intensity colors
+add_color "0;90" "Bright Black" ""
+add_color "0;91" "Bright Red" ""
+add_color "0;92" "Bright Green" ""
+add_color "0;93" "Bright Yellow" ""
+add_color "0;94" "Bright Blue" ""
+add_color "0;95" "Bright Magenta" ""
+add_color "0;96" "Bright Cyan" ""
+add_color "0;97" "Bright White" ""
+
+# High Intensity background colors (not typically used for text)
+# add_color "0;100" "Bright Black Background" "\t"
+# add_color "0;101" "Bright Red Background" "\t"
+# add_color "0;102" "Bright Green Background" "\t"
+# add_color "0;103" "Bright Yellow Background" "\t"
+# add_color "0;104" "Bright Blue Background" "\t"
+# add_color "0;105" "Bright Magenta Background" "\t"
+# add_color "0;106" "Bright Cyan Background" "\t"
+# add_color "0;107" "Bright White Background" "\t"
+
+echo "ASCII color codes have been written to ascii_colors.txt"

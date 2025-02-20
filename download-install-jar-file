@@ -1,0 +1,40 @@
+#!/bin/zsh
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <artifact_url>"
+    echo "Download a jar file from the given <artifact_url>"
+    echo "and installs it to your local repo at ~/.m2"
+    exit 1
+fi
+# Function to download a JAR file from a given URL 
+# and install it into your local repo at ~/.g2"
+install_jar() {
+    local url=$1
+
+    # Extract groupId, artifactId, version, and file name from the URL
+    local file_name=$(basename $url)
+    local version=$(echo $url | awk -F'/' '{print $(NF-1)}')
+    local artifactId=$(echo $url | awk -F'/' '{print $(NF-2)}')
+    local groupId=$(echo $url | awk -F'/' '{print $(NF-3)}' | tr '/' '.')
+
+    # Download the JAR file
+    curl -o $file_name $url
+
+    # Install the JAR file to the local repository
+    mvn install:install-file -Dfile=$file_name -DgroupId=$groupId -DartifactId=$artifactId -Dversion=$version -Dpackaging=jar
+
+    # Clean up the downloaded file
+    rm $file_name
+}
+
+# List of artifact URLs
+artifact_urls=(
+    "https://repo1.maven.org/maven2/com/textkernel/tx-java/2.3.2/tx-java-2.3.2.jar"
+    "https://repo1.maven.org/maven2/com/google/code/gson/gson/2.9.0/gson-2.9.0.jar"
+    "https://repo1.maven.org/maven2/com/squareup/okhttp3/okhttp/4.9.3/okhttp-4.9.3.jar"
+)
+
+# Install each artifact
+for url in $artifact_urls; do
+    install_jar $url
+done

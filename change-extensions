@@ -1,0 +1,30 @@
+#!/bin/bash
+
+# Check if the correct number of arguments is provided
+if [ "$#" -ne 3 ]; then
+    echo "Usage: $0 <folder_path> <src_extension> <dst_extension>"
+    echo
+    echo "Example: to find files in the current directory with 
+         extension 'md' and replace those with 'rst', use:
+         
+         change-extensions ./ 'md' 'rst'"
+    exit 1
+fi
+
+# Assign arguments to variables
+folder_path=$1
+src_extension=$2
+dst_extension=$3
+
+# Find all files with the source extension and rename them
+find "$folder_path" -type f -name "*$src_extension" | while read -r file; do
+    # Get the base name of the file without the extension
+    base_name=$(basename "$file" "$src_extension")
+    # Get the directory name of the file
+    dir_name=$(dirname "$file")
+    # Construct the new file name with the destination extension
+    new_file="$dir_name/$base_name$dst_extension"
+    # Rename the file
+    mv "$file" "$new_file"
+    echo "Renamed: $file -> $new_file"
+done

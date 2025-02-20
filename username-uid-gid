@@ -1,0 +1,18 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <username>"
+    exit 1
+fi
+
+USERNAME=$1
+
+USER_UID=$(id -u "$USERNAME" 2>/dev/null)
+USER_GID=$(id -g "$USERNAME" 2>/dev/null)
+
+if [ $? -ne 0 ]; then
+    echo "User $USERNAME not found."
+    exit 1
+fi
+
+echo "$USER_UID:$USER_GID"

@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# -ne 2 ]; then
+   echo "EXAMPLE: tarballer <TARBALL_FILE> <SRC_DIR>"
+   echo "runs     tar -czf \${TARBALL_FILE}.tar.gz \${SRC_DIR}/"
+
+   exit 0
+fi
+
+TARBALL_FILE=$1
+SRC_DIR=$2
+
+if [ ! -d ${SRC_DIR} ]; then
+   echo "SRC_DIR: ${SRC_DIR} not found"
+   exit 1
+fi
+
+echo "tar -czvf ${TARBALL_FILE}.tar.gz ${SRC_DIR}/"
+tar -czvf ${TARBALL_FILE}.tar.gz ${SRC_DIR}/
+

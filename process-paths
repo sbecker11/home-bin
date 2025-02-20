@@ -1,0 +1,15 @@
+#!/bin/bash
+
+# Function to process the PATH environment variable
+process_path() {
+    # Convert PATH to a list of paths, remove duplicates, and convert back to PATH format
+    new_path=$(echo "${PATH}" | tr ':' '\n' | uniq | tr '\n' ':')
+
+    # Remove the trailing colon
+    new_path=${new_path%:}
+}
+
+# Call the function to process the PATH
+process_path
+
+echo "$new_path"

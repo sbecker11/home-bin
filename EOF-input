@@ -1,0 +1,4 @@
+command <<EOF
+your text
+here
+EOF

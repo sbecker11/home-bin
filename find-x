@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# != 1 ]; then
+   echo "usage: $0 <find_phrase>";
+   echo "finds phrase anywhere from cwd"
+   exit 1
+fi
+
+find_phrase=$1
+
+find . -type f  -exec grep -Hn "${find_phrase}" "{}" ";"

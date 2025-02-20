@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# This script is useful for developers who use virtual environments
+# and need to quickly activate the virtual environment,
+# upgrade pip, and set the PYTHONPATH to include the src and tests directories.
+# It also removes duplicates from the PYTHONPATH.
+# It is intended to be used as a command line tool.
+# It is not intended to be used as a script in a project.
+# It is intended to be used as a command line tool that is
+# sourced in the shell.'
+
+# this script is sourced by the alias venv-activate
+# it is not intended to be run as a standalone script
+# it is intended to be sourced in the shell or in 
+# a script that is run in the shell.
+
+# Determine the root directory of the project
+ROOT_DIR=$(dirname $(dirname $(realpath $0)))
+
+# Activate the virtual environment
+source "$ROOT_DIR/venv/bin/activate"
+
+# Update pip to the latest version
+python -m pip install --upgrade pip
+
+# If the project has a src directory and if not 
+# already in the PYTHONPATH, then add it.
+if [ -f "$ROOT_DIR/src/__init__.py" ]; then
+    SRC_PATH="$ROOT_DIR/src"
+    if [[ ":$PYTHONPATH:" != *":$SRC_PATH:"* ]]; then
+        export PYTHONPATH="$SRC_PATH:$PYTHONPATH"
+    fi
+fi
+
+# Likewise, if the project has a tests directory and if not 
+# already in the PYTHONPATH then add it.
+if [[ -d "$ROOT_DIR/tests" ]]; then
+    TESTS_PATH="$ROOT_DIR/tests"
+    if [[ ":$PYTHONPATH:" != *":$TESTS_PATH:"* ]]; then
+        export PYTHONPATH="$TESTS_PATH:$PYTHONPATH"
+    fi
+fi
+
+# Remove duplicates from PYTHONPATH
+export PYTHONPATH=$(echo "$PYTHONPATH" | awk -v RS=: -v ORS=: '!a[$1]++' | sed 's/:$//')
+
+# echo "Virtual environment activated, pip upgraded, and PYTHONPATH set to $PYTHONPATH"

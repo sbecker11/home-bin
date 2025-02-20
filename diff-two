@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <filename> to see the diff of output for od-16 and xxd-16"
+  exit 1
+fi
+
+filename="$1"
+
+diff <(./od-16 "$filename") <(./xxd-16 "$filename")
+
+if [ "$?" -eq 0 ]; then
+  echo "No diff"
+fi
+

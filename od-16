@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+  echo "Usage: $0 <filename> to see first 16 hexadecimal bytes of filename"
+  exit 1
+fi
+
+filename="$1"
+
+od -An -t x1 -N 16 "$filename" | tr -d '\n' | tr -s ' ' | sed 's/^ //;s/ *$//;s/$/\n/'
+
