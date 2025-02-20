@@ -1,1 +1,5 @@
-venv/
+.env*
+# ignore all subfolders recursively under ~/bin
+**/
+
+macos-bash-scripts/
