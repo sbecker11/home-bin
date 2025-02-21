@@ -23,15 +23,16 @@ alias iso8601='date -u "+%FT%T UTC"'
 alias micros='date -j -f "%a %b %d %T %Z %Y" "`date`" "+%s000000"'
 alias path='tr ":" "\n" <<< "$PATH"' 
 alias paths='echo $PATH | tr ":" "\n"'
+alias pythonpaths='echo $PYTHONPATH | tr ":" "\n"'
 alias iterm2-kafka='echo -e "\033]50;SetProfile=kafka-streaming-pipeline\a"'
 alias iterm2-default='echo -e "\033]50;SetProfile=Default\a"'
 alias vault-serve='vault server -dev'
 alias cdyt='pushd ~/workspace-youtube/youtube-search-app'
 
 # the venv aliases
-alias venv-activate='source venv/bin/activate'
+alias venv-activate='source ~/bin/venv-activate-project'
 alias venv-deactivate='deactivate'
-alias venv-make='~/bin/venv-create && source venv/bin/activate && pip-upgrade'
+alias venv-make='~/bin/venv-create && source ~/bin/venv-activate-projeact'
 alias venv-destroy='~/bin/venv-destroy && deactivate'
 
 #---------------------------

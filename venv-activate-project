@@ -7,27 +7,52 @@
 # It is intended to be used as a command line tool.
 # It is not intended to be used as a script in a project.
 # It is intended to be used as a command line tool that is
-# sourced in the shell.'
+# sourced in the shell.
 
 # this script is sourced by the alias venv-activate
 # it is not intended to be run as a standalone script
 # it is intended to be sourced in the shell or in 
 # a script that is run in the shell.
 
-# Determine the root directory of the project
-ROOT_DIR=$(dirname $(dirname $(realpath $0)))
+prompt() {
+    echo -n "$1 "
+    read -n 1
+    echo
+}
 
-# Activate the virtual environment
+# Function to handle errors
+handle_error() {
+    echo -n "$1 "
+    read -n 1 
+    echo
+    return 1
+}
+
+# Determine the root directory of the project
+ROOT_DIR=$(git rev-parse --show-toplevel)
+
+# Check if the root directory is not empty
+if [ -z "$ROOT_DIR" ]; then
+    handle_error "This script should be sourced from a venv-enhanced project. (hit a key)"
+fi
+
+# Check the virtual environment
+if [ ! -f "$ROOT_DIR/venv/bin/activate" ]; then
+    handle_error "Virtual environment not found. Create a virtual environment first. (hit a key)"
+fi
+
+prompt "activating the virtual environment (hit a key)"
 source "$ROOT_DIR/venv/bin/activate"
 
-# Update pip to the latest version
-python -m pip install --upgrade pip
+prompt "upgrading pip (hit a key)"
+python -m pip install --upgrade pip || handle_error "Failed to upgrade pip"
 
 # If the project has a src directory and if not 
 # already in the PYTHONPATH, then add it.
 if [ -f "$ROOT_DIR/src/__init__.py" ]; then
     SRC_PATH="$ROOT_DIR/src"
     if [[ ":$PYTHONPATH:" != *":$SRC_PATH:"* ]]; then
+        prompt "adding $SRC_PATH to PYTHONPATH (hit a key)"
         export PYTHONPATH="$SRC_PATH:$PYTHONPATH"
     fi
 fi
@@ -37,11 +62,14 @@ fi
 if [[ -d "$ROOT_DIR/tests" ]]; then
     TESTS_PATH="$ROOT_DIR/tests"
     if [[ ":$PYTHONPATH:" != *":$TESTS_PATH:"* ]]; then
+        prompt "adding $TESTS_PATH to PYTHONPATH (hit a key)"
         export PYTHONPATH="$TESTS_PATH:$PYTHONPATH"
     fi
 fi
 
-# Remove duplicates from PYTHONPATH
+prompt "Removing duplicates from PYTHONPATH (hit a key)"
 export PYTHONPATH=$(echo "$PYTHONPATH" | awk -v RS=: -v ORS=: '!a[$1]++' | sed 's/:$//')
 
-# echo "Virtual environment activated, pip upgraded, and PYTHONPATH set to $PYTHONPATH"
+prompt "bye now (hit a key)"
+
+echo "PYTHONPATH: $PYTHONPATH"
