@@ -15,8 +15,10 @@ read -p "Ready to destroy the venv folder? (y/n) " answer
 if [ "$answer" = "y" ]; then
   rm -rf venv bin include lib pyvenv.cfg
   echo "venv and related folders destroyed"
-  # don't care if it's not activated
-  deactivate 2> /dev/null
 fi
+
+deactivate
+
+
 
 # this script is the invert of alias venv-make

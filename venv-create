@@ -1,5 +1,13 @@
 #!/bin/sh
 
+if [ -n "$1" ]; then
+  VENV_HOME="$1"
+else
+  VENV_HOME=$(git rev-parse --show-toplevel) || VENV_HOME=$(pwd)
+fi
+
+pushd $VENV_HOME > /dev/null
+
 if [ -d "venv" ]; then
   echo "venv already exists, use venv-activate";
 fi
@@ -20,6 +28,8 @@ if [ "$?" == "0" ]; then
     $pythonPath -m pip install -r requirements.txt;
   fi
 fi
+popd > /dev/null
+echo "venv created, use venv-activate to activate it";
 
 # this script is used in the venv-make alias defined as
 # alias venv-make="venv-create && source venv/bin/activate"

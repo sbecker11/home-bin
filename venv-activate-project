@@ -28,43 +28,70 @@ handle_error() {
     return 1
 }
 
-# Determine the root directory of the project
-ROOT_DIR=$(git rev-parse --show-toplevel)
+# if venv is found at cwd (current working directory) 
+# then attempt to activate it.
+# if venv is found at project root then attempt to activate it.
+# if venv is not found at either cwd or project root then
+# prompt user to use 'venv-make' to make a new virtual environment.
 
-# Check if the root directory is not empty
-if [ -z "$ROOT_DIR" ]; then
-    handle_error "This script should be sourced from a venv-enhanced project. (hit a key)"
+VENV_HOME=""
+PROJECT_ROOT=$(git rev-parse --show-toplevel)
+
+# check if current directory has a venv directory
+if [ -d "$(pwd)/venv" ] && [ -f "$(pwd)/venv/bin/activate" ]; then
+    VENV_HOME="$(pwd)"
+else 
+    if [ -d "${PROJECT_ROOT}/venv" ] && [ -f "${PROJECT_ROOT}/venv/bin/activate" ]; then
+        VENV_HOME="${PROJECT_ROOT}"
+    else
+        # prompt the user to create a new virtual environment with 'venv-make'
+        echo "No venv found in the current directory or project root."
+        prompt "Please run 'venv-make' to create a new venv (Hit a key)"
+        return 0
+    fi
 fi
 
-# Check the virtual environment
-if [ ! -f "$ROOT_DIR/venv/bin/activate" ]; then
-    handle_error "Virtual environment not found. Create a virtual environment first. (hit a key)"
+prompt "activating the existing virtual environment at ${VENV_HOME} (hit a key)"
+source "${VENV_HOME}/venv/bin/activate"
+
+# Check if the virtual environment is activated
+if [ -z "$VIRTUAL_ENV" ]; then
+    handle_error "Failed to activate the existing virtual environment. (hit a key)"
 fi
-
-prompt "activating the virtual environment (hit a key)"
-source "$ROOT_DIR/venv/bin/activate"
-
 prompt "upgrading pip (hit a key)"
 python -m pip install --upgrade pip || handle_error "Failed to upgrade pip"
 
-# If the project has a src directory and if not 
-# already in the PYTHONPATH, then add it.
-if [ -f "$ROOT_DIR/src/__init__.py" ]; then
-    SRC_PATH="$ROOT_DIR/src"
-    if [[ ":$PYTHONPATH:" != *":$SRC_PATH:"* ]]; then
-        prompt "adding $SRC_PATH to PYTHONPATH (hit a key)"
-        export PYTHONPATH="$SRC_PATH:$PYTHONPATH"
-    fi
+if [ -f ${VENV_HOME}/requirements.txt ]; then
+    prompt "installing all required packages in ${VENV_HOME}/requirements.txt} (hit a key)"
+    python -m pip install -r ${VENV_HOME}/requirements.txt || handle_error "Failed to install requirements.txt file"
+else
+    handle_error "requirements.txt file not found. (hit a key)"
 fi
 
-# Likewise, if the project has a tests directory and if not 
-# already in the PYTHONPATH then add it.
-if [[ -d "$ROOT_DIR/tests" ]]; then
-    TESTS_PATH="$ROOT_DIR/tests"
-    if [[ ":$PYTHONPATH:" != *":$TESTS_PATH:"* ]]; then
-        prompt "adding $TESTS_PATH to PYTHONPATH (hit a key)"
-        export PYTHONPATH="$TESTS_PATH:$PYTHONPATH"
+# if PROJECT_ROOT is defined and if it matches VENV_HOME then 
+# set PYTHONPATH to include the src and tests directories if found
+if [ -n "${PROJECT_ROOT}" ] && [ "${PROJECT_ROOT}" = "${VENV_HOME}" ] ; then
+
+    # If the project has a src directory and if not 
+    # already in the PYTHONPATH, then add it.
+    if [ -f "$PROJECT_ROOT/src/__init__.py" ]; then
+        SRC_PATH="$PROJECT_ROOT/src"
+        if [[ ":$PYTHONPATH:" != *":$SRC_PATH:"* ]]; then
+            prompt "adding $SRC_PATH to PYTHONPATH (hit a key)"
+            export PYTHONPATH="$SRC_PATH:$PYTHONPATH"
+        fi
     fi
+
+    # Likewise, if the project has a tests directory and if not 
+    # already in the PYTHONPATH then add it.
+    if [[ -d "$PROJECT_ROOT/tests" ]]; then
+        TESTS_PATH="$PROJECT_ROOT/tests"
+        if [[ ":$PYTHONPATH:" != *":$TESTS_PATH:"* ]]; then
+            prompt "adding $TESTS_PATH to PYTHONPATH (hit a key)"
+            export PYTHONPATH="$TESTS_PATH:$PYTHONPATH"
+        fi
+    fi
+
 fi
 
 prompt "Removing duplicates from PYTHONPATH (hit a key)"

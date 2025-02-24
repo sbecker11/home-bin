@@ -32,7 +32,7 @@ alias cdyt='pushd ~/workspace-youtube/youtube-search-app'
 # the venv aliases
 alias venv-activate='source ~/bin/venv-activate-project'
 alias venv-deactivate='deactivate'
-alias venv-make='~/bin/venv-create && source ~/bin/venv-activate-projeact'
+alias venv-make='~/bin/venv-create && source ~/bin/venv-activate-project'
 alias venv-destroy='~/bin/venv-destroy && deactivate'
 
 #---------------------------
