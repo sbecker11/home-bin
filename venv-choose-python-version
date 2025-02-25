@@ -54,13 +54,8 @@ while true; do
     fi
     case $choice in
         [qQ])
-            if [ -n "$current_python_short" ]; then
-                echo "$current_python_short"
-                exit 0
-            else
-                # echo "No Python version selected. Exiting..." >&2
-                exit 1
-            fi
+            echo "Quitting" >&2
+            exit 1
             ;;
         [1-9]|[1-9][0-9])
             selected=$(echo "$pythons" | sed -n "${choice}p")

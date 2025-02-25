@@ -13,8 +13,10 @@ if [ -d "venv" ]; then
 fi
 pythonPath=$(venv-choose-python-version)
 if [ "$?" != "0" ]; then
-  echo "no python version selected. exiting";
+  # echo "chooser quit"
   exit 1;
+else
+  echo "using python version: ${pythonPath}";
 fi
 if [ "$?" == "0" ]; then
   echo "installing venv with ${pythonPath} -m venv venv";

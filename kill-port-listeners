@@ -1,0 +1,30 @@
+#!/bin/bash
+
+kill-port-listeners() {
+    local port=$1
+
+    if [ -z "$port" ]; then
+        echo "Usage: kill-port-listeners <port>"
+        return 1
+    fi
+
+    while true; do
+        # Find the process IDs (PIDs) using the given port
+        pids=$(lsof -t -i :$port)
+        
+        if [ -z "$pids" ]; then
+            echo "No more processes found using port $port."
+            break
+        fi
+
+        # Kill each process using the given port
+        for pid in $pids; do
+            echo "Killing process $pid using port $port..."
+            kill -9 $pid
+        done
+
+        sleep 1
+    done
+}
+
+kill-port-listeners $1
