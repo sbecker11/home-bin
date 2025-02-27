@@ -1,0 +1,15 @@
+#!/bin/bash
+
+list-port-listeners() {
+    local port=$1
+
+    if [ -z "$port" ]; then
+        echo "Usage: list-port-listeners <port>"
+        return 1
+    fi
+
+    # Find the process IDs (PIDs) using the given port
+    pids=$(lsof -t -i :$port)
+}
+
+list-port-listeners $1
