@@ -1,0 +1,4 @@
+#!/bin/bash
+
+cp ~/bin/00-script.zsh ~/.oh-my-zsh/custom/
+echo "copied 00-script.zsh to ~/.oh-my-zsh/custom/"

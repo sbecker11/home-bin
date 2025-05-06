@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Set SEP to the first argument if provided, otherwise default to ':'
+SEP="${1:-:}"
+
+# Pass the bash variable SEP into awk using the -v option
+# Use a different awk variable name (e.g., out_sep) to avoid confusion
+# with the internal awk variable 'awk_sep' used for printing.
+awk -v out_sep="$SEP" '
+{
+  printf "%s%s", awk_sep, $0 # Print separator (empty first time), then line
+  awk_sep = out_sep         # Set separator for the *next* line
+}
+END {
+  print ""                  # Print final newline
+}'

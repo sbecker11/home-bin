@@ -28,7 +28,7 @@ alias iterm2-kafka='echo -e "\033]50;SetProfile=kafka-streaming-pipeline\a"'
 alias iterm2-default='echo -e "\033]50;SetProfile=Default\a"'
 alias vault-serve='vault server -dev'
 alias cdyt='pushd ~/workspace-youtube/youtube-search-app'
-allas cdfk='pushd ~/workspace-flock/flock-of-postcards'
+alias cdfl='pushd ~/workspace-flock/flock-of-postcards'
 
 # the venv aliases
 alias venv-activate='source ~/bin/venv-activate-project'
@@ -38,12 +38,15 @@ alias venv-destroy='~/bin/venv-destroy && deactivate'
 
 #---------------------------
 # HashiCorp Vault
-. ./.env-vault
-
+if [ -f ~/.vault-env ]; then
+    . ~/.vault-env
+fi
 
 #---------------------------
 # OPENAI
-. ./.env-openai
+]if [ -f ~/.env-openai ]; then
+    . ~/.env-openai
+fi
 
 #---------------------#
 PYCHARM_HOME=/Applications/PyCharm.app/Contents/MacOS
