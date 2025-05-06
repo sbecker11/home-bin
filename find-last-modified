@@ -1,0 +1,47 @@
+#!/bin/bash
+
+usage() {
+    echo "Usage: $0 <target_dir> <num_hours>"
+    echo "Lists all files in <target_dir> (and its subdirectories)"
+    echo "that have been created or modified in the last <num_hours>."
+    echo ""
+    echo "Arguments:"
+    echo "  target_dir: The directory to search within."
+    echo "  num_hours:  The number of hours to look back for changes."
+    echo ""
+    echo "Example: $0 ./my_project 24  (Finds files changed in the last 24 hours in ./my_project)"
+    exit 1
+}
+
+# 1. Argument validation
+if [ "$#" -ne 2 ]; then
+    echo "Error: Incorrect number of arguments."
+    usage
+fi
+
+target_dir="$1"
+num_hours="$2"
+
+if [ ! -d "$target_dir" ]; then
+    echo "Error: Target directory '$target_dir' not found or is not a directory."
+    usage
+fi
+
+if ! [[ "$num_hours" =~ ^[0-9]+(\.[0-9]+)?$ ]] || (( $(echo "$num_hours <= 0" | bc -l) )); then
+    echo "Error: num_hours must be a positive number."
+    usage
+fi
+
+# 2. Convert hours to minutes for find command
+num_minutes=$(awk -v hours="$num_hours" 'BEGIN { printf "%.0f", hours * 60 }')
+
+echo "Searching in '$target_dir' for files created or modified in the last $num_hours hour(s) (approx. $num_minutes minutes)..."
+echo "---"
+
+# 3. Execute find command
+find "$target_dir" -type f \( -mmin -"$num_minutes" -o -cmin -"$num_minutes" \) -print
+
+echo "---"
+echo "Search complete."
+
+exit 0 

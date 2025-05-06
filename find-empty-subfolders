@@ -1,0 +1,65 @@
+#!/bin/bash
+
+usage() {
+    echo "Usage: $0 [TARGET_DIRECTORY] [--delete]"
+    echo "Finds and optionally deletes empty subfolders."
+    echo "If TARGET_DIRECTORY is not specified, defaults to the current directory."
+    echo "If --delete is specified, empty subfolders are deleted, otherwise they are listed."
+    echo "Example: $0 ./my_folder --delete"
+    echo "         $0 --delete              (operates on current directory)"
+    echo "         $0 /some/path           (lists empty subfolders in /some/path)"
+    exit 1
+}
+
+target_dir="."
+action="list" # Default action is to list
+
+# Process arguments
+while [[ "$#" -gt 0 ]]; do
+    case "$1" in
+        --delete)
+            action="delete"
+            shift # past argument
+            ;;
+        -h|--help)
+            usage
+            ;;
+        -*) # an option that is not --delete or --help
+            echo "Error: Unknown option '$1'"
+            usage
+            ;;
+        *) # should be the target directory
+            if [ "$target_dir" == "." ]; then # Only set target_dir if it hasn't been set by a previous non-option argument
+                if [ -d "$1" ]; then
+                    target_dir="$1"
+                else
+                    echo "Error: Directory '$1' not found or not a directory."
+                    usage
+                fi
+            else # target_dir was already set, this is an extra argument
+                echo "Error: Too many directory arguments. Only one target directory is allowed."
+                usage
+            fi
+            shift # past argument
+            ;;
+    esac
+done
+
+# Ensure target_dir is valid (this is a final check, should mostly be caught above)
+if [ ! -d "$target_dir" ]; then
+    echo "Error: Target directory '$target_dir' is not valid."
+    usage
+fi
+
+# Execute the find command
+if [ "$action" == "delete" ]; then
+  echo "Finding and DELETING empty subfolders in '$target_dir'..."
+  # The -print option before -delete will show what is being deleted.
+  find "$target_dir" -mindepth 1 -type d -empty -print -delete
+  echo "Deletion process complete."
+else
+  echo "Finding empty subfolders in '$target_dir' (run with --delete to remove them):"
+  find "$target_dir" -mindepth 1 -type d -empty
+fi
+
+exit 0 
