@@ -55,11 +55,21 @@ declare -a image_files_sizes
 echo "Scanning for image files in '$img_dir'..."
 # Use find to get files, -maxdepth 1 for non-recursive, -print0 for safe filenames
 # Common image extensions, case-insensitive
-while IFS= read -r -d $'\0' file; do
+processed_count=0
+skipped_count=0
+while IFS= read -r -d $'\0' file_loop_var; do # Renamed 'file' to avoid potential global clash and clarify scope
     # Get file size - macOS compatible
-    size=$(stat -f %z "$file") 
-    image_files_paths+=("$file")
+    size=$(stat -f %z "$file_loop_var" 2>/dev/null) # Get size, suppress stat stderr
+
+    if [ -z "$size" ] || ! [[ "$size" =~ ^[0-9]+$ ]]; then
+        echo "Warning: Could not reliably get size for '$file_loop_var' (size reported: '$size'). Skipping this file." >&2
+        skipped_count=$((skipped_count + 1))
+        continue
+    fi
+
+    image_files_paths+=("$file_loop_var")
     image_files_sizes+=("$size")
+    processed_count=$((processed_count + 1))
 done < <(find "$img_dir" -maxdepth 1 -type f \
     \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" -o -iname "*.gif" \
     -o -iname "*.bmp" -o -iname "*.tiff" -o -iname "*.tif" -o -iname "*.webp" \
@@ -74,7 +84,7 @@ if [ ${#image_files_paths[@]} -eq 0 ]; then
     exit 0
 fi
 
-echo "Found ${#image_files_paths[@]} image files."
+echo "Scan complete. Processed $processed_count files that could be sized, skipped $skipped_count files."
 
 # 5. Sort image files by size in descending order
 # Create a temporary list of "size filepath" for sorting
@@ -86,7 +96,7 @@ done
 declare -a sorted_image_files_paths
 declare -a sorted_image_files_sizes
 # Sort by the first field (size), numerically, in reverse (descending) order
-while IFS= read -r size path_and_maybe_more; do # path_and_maybe_more to handle spaces in path
+while read -r size path_and_maybe_more; do # path_and_maybe_more to handle spaces in path
     sorted_image_files_sizes+=("$size")
     sorted_image_files_paths+=("$path_and_maybe_more") # Store the full path correctly
 done < <(sort -k1,1nr "$tmp_file_list_for_sorting")
