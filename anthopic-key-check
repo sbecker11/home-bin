@@ -1,0 +1,9 @@
+curl https://api.anthropic.com/v1/messages \
+  -H "Content-Type: application/json" \
+  -H "x-api-key: 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" \
+  -H "anthropic-version: 2023-06-01" \
+  -d '{
+    "model": "claude-3-5-sonnet-20241022",
+    "max_tokens": 10,
+    "messages": [{"role": "user", "content": "Hi"}]
+  }'

@@ -1,0 +1,11 @@
+# Close Cursor
+osascript -e 'quit app "Cursor"'
+
+# Navigate to the Cursor application support directory
+cd ~/Library/Application\ Support/Cursor/
+
+# Remove the CachedData folder
+rm -rf CachedData
+
+# Restart Cursor
+open -a "Cursor"

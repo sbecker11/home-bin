@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Take 1 or more long line of text and "fold" it into 
+# lines of 60 max characters and precede each line with '#'
+#
+# Usage:
+#  cat really-long-file | $0 > commented-file
+# or
+#  $0 $(cat really-long-file) > commented-file
+#
+
+
+# Check if input is provided via argument or stdin
+if [ $# -eq 0 ]; then
+    # Read from stdin
+    input=$(cat)
+else
+    # Use first argument as input
+    input="$1"
+fi
+
+# Wrap input to 60 characters and prefix each line with '#'
+echo "$input" | fold -s -w 60 | sed 's/^/# /'
+
+

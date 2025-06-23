@@ -1,0 +1,31 @@
+#!/bin/bash
+
+# Check Bash version and exit if less than 5.2
+
+# Extract the Bash version (e.g., "5.2.32" or "5.2")
+bash_version=$(bash --version | head -n1 | grep -o '[0-9]\+\.[0-9]\+\(\.[0-9]\+\)\?')
+
+# Check if bash_version is empty
+if [ -z "$bash_version" ]; then
+    echo "Error: Could not determine Bash version" >&2
+    exit 1
+fi
+
+# Compare version
+version_compare() {
+    IFS='.' read -r -a required <<< "5.2"
+    IFS='.' read -r -a current <<< "$bash_version"
+    if [ "${current[0]}" -lt "${required[0]}" ] || \
+       { [ "${current[0]}" -eq "${required[0]}" ] && [ "${current[1]}" -lt "${required[1]}" ]; }; then
+        return 1
+    fi
+    return 0
+}
+
+if ! version_compare; then
+echo "Fail: bash version:$bash_version is not 5.2 or higher." >&2
+    exit 1
+else
+    echo "Ok: bash version:$bash_version is 5.2 or higher." >&2 
+    exit 0
+fi

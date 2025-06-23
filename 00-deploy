@@ -1,4 +1,4 @@
 #!/bin/bash
-
+# this script copies ~/bin/00-script.zsh to ~/.oh-my-zsh/custom/
 cp ~/bin/00-script.zsh ~/.oh-my-zsh/custom/
 echo "copied 00-script.zsh to ~/.oh-my-zsh/custom/"

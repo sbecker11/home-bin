@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Function to process the PATH environment variable
+process_path() {
+    # Split the PATH into an array
+    IFS=':' read -r -a path_array <<< "$PATH"
+
+    # Create an associative array to track seen paths
+    declare -A seen_paths
+
+    # Iterate over the array in reverse order
+    for (( idx=${#path_array[@]}-1 ; idx>=0 ; idx-- )) ; do
+        path="${path_array[idx]}"
+        # If the path has not been seen, add it to the associative array
+        if [[ -z "${seen_paths[$path]}" ]]; then
+            seen_paths["$path"]=1
+        else
+            # Remove the duplicate path
+            unset 'path_array[idx]'
+        fi
+    done
+
+    # Reconstruct the PATH from the array
+    new_path=$(IFS=:; echo "${path_array[*]}")
+
+    # Export the new PATH
+    export PATH="$new_path"
+}
+
+# Call the function to process the PATH
+process_path
+
+# Print the new PATH for verification
+echo "Processed PATH: $PATH"

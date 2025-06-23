@@ -1,2 +1,40 @@
 #!/bin/bash
-paths | uniq | multi-join
+
+# This Bash script removes duplicate entries from the PATH
+# environment variable while preserving the order of the
+# first occurrence of each path.
+
+# Remember that if A comes before B in PATH then A takes
+# precedence.
+
+process_path() {
+    # Split the PATH into an array
+    IFS=':' read -r -a path_array <<< "$PATH"
+
+    # Initialize variables
+    unique_paths=""
+    seen=""
+
+    # Iterate over the array
+    for path in "${path_array[@]}"; do
+        # Skip empty paths
+        [ -z "$path" ] && continue
+        # Check if path has been seen (using grep)
+        if ! echo "$seen" | grep -Fx "$path" >/dev/null; then
+            # Add to unique_paths
+            if [ -z "$unique_paths" ]; then
+                unique_paths="$path"
+            else
+                unique_paths="$unique_paths:$path"
+            fi
+            # Mark as seen
+            seen="$seen\n$path"
+        fi
+    done
+
+    # Print the new path
+    echo "$unique_paths"
+}
+
+# Call the function to process the PATH
+process_path

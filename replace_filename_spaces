@@ -1,1 +1,3 @@
+# this script replaces spaces in filenames with underscores
+
 for f in *\ *; do mv "$f" "${f// /_}"; done

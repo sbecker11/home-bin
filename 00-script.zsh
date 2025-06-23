@@ -29,6 +29,7 @@ alias iterm2-default='echo -e "\033]50;SetProfile=Default\a"'
 alias vault-serve='vault server -dev'
 alias cdyt='pushd ~/workspace-youtube/youtube-search-app'
 alias cdfl='pushd ~/workspace-flock/flock-of-postcards'
+alias ip='ipconfig getifaddr en0'
 
 # the venv aliases
 alias venv-activate='source ~/bin/venv-activate-project'

@@ -1,0 +1,15 @@
+# Input: The script reads lines from 
+# stdin (e.g., piped input or a file 
+# redirected to it).
+# Output: It concatenates all input lines 
+# into a single line, with the specified 
+# separator (SEP) between each pair of 
+# lines, and ends with a newline.
+# Key Feature: The first line is printed 
+# without a leading separator (since 
+# awk_sep is initially empty), ensuring 
+# no extra separator appears at the start.
+# 
+# # Set SEP to the first argument if 
+# provided, otherwise default to ':'
+# SEP="${1:-:}"

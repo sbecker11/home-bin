@@ -1,0 +1,47 @@
+#!/bin/bash
+
+# if current bash version is not 5.2 or greater
+# then exit this script
+if [ ./check-bash-version != 0 ]; then
+  echo "ERROR: This script requires bash version 5.2 or higher"
+  exit 1
+fi
+
+# This Bash script removes duplicate entries from the PATH
+# PATH environment variable while preserving the order of the
+# first occurrence of each path.
+
+# Remember that if A comes before B in PATH then A takes
+# precedence.
+
+process_path() {
+    # Split the PATH into an array
+    IFS=':' read -r -a path_array <<< "$PATH"
+
+    # Create an associative array to track seen paths
+    declare -A seen_paths
+
+    # Iterate over the array in reverse order
+    for (( idx=${#path_array[@]}-1 ; idx>=0 ; idx-- )) ; do
+        path="${path_array[idx]}"
+        # If the path has not been seen, add it to the associative array
+        if [[ -z "${seen_paths[$path]}" ]]; then
+            seen_paths["$path"]=1
+        else
+            # Remove the duplicate path
+            unset 'path_array[idx]'
+        fi
+    done
+
+    # Reconstruct the PATH from the array
+    new_path=$(IFS=:; echo "${path_array[*]}")
+
+    # Export the new PATH
+    # export PATH="$new_path"
+
+    # Print the new path instead
+    echo ${new_path}
+}
+
+# Call the function to process the PATH
+process_path
