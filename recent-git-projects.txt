@@ -1,0 +1,418 @@
+--------------------------------------------------------------------------------
+/Users/sbecker11/workspace-spexture
+FE: —
+BE: Express (Node)
+Folder date (mtime): 2025-02-27 02:20:03 -0700
+origin  https://github.com/sbecker11/workspace-spexture.git
+README.md size: 479 bytes
+Source files: 511
+Source lines: 84117
+Commits: 40
+--------------------------------------------------------------------------------
+/Users/sbecker11/workspace-rolodex
+FE: Vite
+BE: —
+Folder date (mtime): 2025-10-20 16:08:01 -0600
+origin  git@github.com:sbecker11/workspace-rolodex.git
+README.md size: 493 bytes
+Source files: 22
+Source lines: 119493
+Commits: 76
+--------------------------------------------------------------------------------
+/Users/sbecker11/workspace-n8n
+FE: —
+BE: —
+Folder date (mtime): 2025-12-01 16:49:49 -0700
+origin  https://github.com/sbecker11/n8n-singleton-migration-workflow.git
+README.md size: 5109 bytes
+Source files: 3
+Source lines: 289
+Commits: 1
+------------------------------------------------------------------------
+/Users/sbecker11/workspace-sms/sms-ripper
+FE: —
+BE: Python (pyproject)
+Folder date (mtime): 2026-03-24 16:02:35 -0600
+origin  git@github.com:sbecker11/sms-ripper.git
+README.md size: 3254 bytes
+Source files: 25
+Source lines: 2464
+Commits: 2
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-xform-maker/xform-maker
+FE: —
+BE: —
+Folder date (mtime): 2025-07-03 01:23:53 -0600
+origin  git@github.com:sbecker11/xform-maker.git
+README.md size: 1889 bytes
+Source files: 29
+Source lines: 11927
+Commits: 35
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-gallery/photo-gallery-project
+FE: —
+BE: Express (Node)
+Folder date (mtime): 2025-02-23 23:14:28 -0700
+origin  https://github.com/sbecker11/photo-gallery-project.git
+README.md size: 1157 bytes
+Source files: 13
+Source lines: 1248
+Commits: 5
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-color-palette/color-maker
+FE: React, Vite
+BE: Express (Node)
+Folder date (mtime): 2026-03-23 21:37:12 -0600
+origin  git@github.com:sbecker11/color-palette-maker.git
+README.md size: 3014 bytes
+Source files: 93
+Source lines: 15490
+Commits: 97
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-job-tracker/job-tracker
+FE: —
+BE: —
+Folder date (mtime): 2025-11-11 11:25:04 -0700
+origin  git@github.com:sbecker11/job-tracker.git
+README.md size: 14 bytes
+Source files: 0
+Source lines: 0
+Commits: 1
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-youtube/youtube-search-app
+FE: —
+BE: Tornado (Python)
+Folder date (mtime): 2025-02-27 13:46:47 -0700
+origin  git@github.com:sbecker11/youtube-search-app
+README.md size: 20544 bytes
+Source files: 47
+Source lines: 4743
+Commits: 32
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-ecommerce-semantic-search/ecommerce-semantic-search
+FE: —
+BE: —
+Folder e): 2026-03-13 09:59:17 -0600
+origin  git@github.com:sbecker11/ecommerce-semantic-search.git
+README.md size: 7489 bytes
+Source files: 34
+Source lines: 3294
+Commits: 29
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-campaign-automation/campaign-automation
+FE: —
+BE: Python (deps file)
+Folder date (mtime): 2025-12-07 14:32:03 -0700
+origin  git@github.com:sbecker11/campaign-automation.git
+README.md size: 25102 bytes
+Source files: 65
+Source lines: 7185
+Commits: 46
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-campaign-automation/campaign-automation-outputs
+FE: —
+BE: —
+Folder date (mtime): 2025-11-16 18:46:19 -0700
+origin  git@github.com:sbecker11/campaign-automation-outputs.git
+README.md size: 1279 bytes
+Source files: 0
+Source lines: 0
+Commits: 11
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-slider/dual-layer-slider
+FE: —
+BE: Express (Node)
+Folder date (2025-12-15 21:02:40 -0700
+origin  https://github.com/sbecker11/dual-layer-slider.git
+README.md size: 6598 bytes
+Source files: 434
+Source lines: 57734
+Commits: 14
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-resume/resume-parser
+FE: —
+BE: Python (pyproject)
+Folder date (mtime): 2026-03-23 01:53:10 -0600
+origin  git@github.com:sbecker11/resume-parser.git
+README.md size: 8080 bytes
+Source files: 33
+Source lines: 6512
+Commits: 41
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-resume/resume-flyer
+FE: Vite, Vue
+BE: Express (Node)
+Folder date (mtime): 2026-03-23 13:06:53 -0600
+origin  git@github.com:sbecker11/resume-flyer.git
+README.md size: 56597 bytes
+Source files: 240
+Source lines: 55574
+Commits: 639
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-grid/grid-cell-neighborhoods
+FE: —
+BE: Python (deps file)
+Folder date (mtime): 2025-10-30 21:42:39 -0600
+origin  github.com:sbecker11/grid-cell-neighborhoods.git
+README.md size: 21242 bytes
+Source files: 13
+Source lines: 6130
+Commits: 26
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-slideshow-weak/image-viewer
+FE: —
+BE: Python (deps file)
+Folder date (mtime): 2025-02-23 23:08:53 -0700
+origin  https://github.com/sbecker11/image-viewer.git
+README.md size: 129 bytes
+Source files: 1
+Source lines: 313
+Commits: 3
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-linear-clone/linear-clone
+FE: React, Next.js
+BE: Next.js (API / Node)
+Folder date (mtime): 2025-07-14 14:14:36 -0600
+origin  https://github.com/sbecker11/linear-clone.git
+README.md size: 6899 bytes
+Source files: 20
+Source lines: 1467
+Commits: 4
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-2D/xform-maker
+FE: —
+BE: —
+Folder date (mtime): 2025-05-09 23:39:27 -0600
+origin  https://github.com/sbecker11/xform-maker.gitE.md size: 1889 bytes
+Source files: 29
+Source lines: 11786
+Commits: 35
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-2D/affine-xform-tool
+FE: —
+BE: Express (Node)
+Folder date (mtime): 2025-05-13 19:32:00 -0600
+origin  git@github.com:sbecker11/affine-xform-tool.git
+README.md size: 3585 bytes
+Source files: 4
+Source lines: 822
+Commits: 12
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-camera-script-editor/cera-script-editor
+FE: React, Vite
+BE: —
+Folder date (mtime): 2026-02-20 19:04:44 -0700
+origin  git@github.com:sbecker11/camera-script-editor.git
+README.md size: 3937 bytes
+Source files: 8
+Source lines: 1097
+Coits: 2
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-sushi/sushi-agent
+FE: React, Vite
+BE: —
+Folder date (mtime): 2025-10-24 17:44:44 -0600
+origin  git@github.com:sbecker11/sushi-ant.git
+README.md size: 10187 bytes
+Source files: 23
+Source lines: 1388
+Commits: 1
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-sushi/sushi-rag-app
+FE: React, Vite
+BE: —
+Folder date (mtime): 2026-03-19 16:42:04 -0600
+origin  git@github.com:sbecker11/sushi-rag-app.git
+README.md size: 23968 bytes
+Source files: 79
+Source lines: 14150
+Commits: 36
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-sushi/sushi-rag-mcp-server
+FE: React, Vite
+BE: —
+Folder date (mtime): 2026-02-27 23:54:48 -0700
+origin  https://github.com/sbecker11/sushi-rag-mcp-server.git
+README.md size: 24634 bytes
+Source files: 60
+Source lines: 10993
+Commits: 5
+---------------------------------------------------------------------
+/Userscker11/workspace-test/react-super-app
+FE: React
+BE: Express (Node)
+Folder date (mtime): 2025-11-29 20:41:03 -0700
+origin  https://github.com/sbecker11/react-super-app.git
+README.md size: 8521 bytes
+Source files: 62
+Source lines: 8755
+Commits: 16
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-spa/python-spa-template
+FE: —
+BE: Python (pyproject)
+Folder date (mtime): 2025-01-20 18:59:43 -0700
+origin  https://github.com/sbecker11/python-spa-telate.git
+README.md size: 3837 bytes
+Source files: 73
+Source lines: 4632
+Commits: 16
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-spa/spa-python
+FE: —
+BE: Python (pyproject)
+Folder date (mtime): 2025-01-04 18:26:26 -0700
+origin  git@github.com:sbecker11/spa-python.git
+README. size: 1025 bytes
+Source files: 35
+Source lines: 2459
+Commits: 3
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-go/webgl-point-cloud
+FE: —
+BE: Go
+Folder date (mtime):025-06-25 15:59:40 -0600
+origin  git@github.com:sbecker11/webgl-point-cloud.git
+README.md size: 5235 bytes
+Source files: 15
+Source lines: 2097
+Commits: 4
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-react/react-super-app
+FE: React
+BE: Express (Node)
+Folder date (mtime): 2025-12-07 20:05:49 -0700
+origin  https://github.com/sbecker11/react-super-app.git
+README.md size: 14141 bytes
+Source files: 132
+Source lines: 34771
+Commits: 84
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-react/spexture-com
+FE: React
+BE: Express (Node)
+Folder date (mtime): 2025-12-15 12:01:05 -0700
+origin  https://github.com/sbecker11/spexture-com.git
+README.md size: 14883 bytes
+Source files: 132
+Source lines: 34948
+Commits: 3
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-spring/linkage-engine
+FE: —
+BE: —
+Folder date (mtime): 2026-03-20 13:58:01 -0600
+origin  git@github.com:sbecker11/age-engine.git
+README.md size: 2156 bytes
+Source files: 38
+Source lines: 1692
+Commits: 23
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-threedistvis/ThreeDistVis-go
+FE: —
+BE: Go
+Folder date (mtime): 2025-06-23 17:53:21 -0600
+origin  git@github.com:sbecker11/threedistvis-go.git
+README.md size: 2672 bytes
+Source files: 5
+Source lines: 624
+Commits: 2
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-threedistvis/ThreeDistVisE: Streamlit (Python)
+BE: Python (pyproject)
+Folder date (mtime): 2025-06-22 17:08:19 -0600
+origin  git@github.com:sbecker11/threedistvis.git
+README.md size: 2918 bytes
+Source files: 3
+Source lines: 132
+Commits: 5
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-vault/vault2
+FE: âE: —
+Folder date (mtime): 2025-01-07 09:38:29 -0700
+origin  git@github.com:sbecker11/workspace-vault.git
+README.md size: 5283 bytes
+Source files: 0
+Source lines: 0
+Commits: 2
+-------------------------------------------------------------------
+/Users/sbecker11/workspace-vault/the-vault
+FE: —
+BE: —
+Folder date (mtime): 2025-01-13 22:14:28 -0700
+origin  git@gi.com:sbecker11/the-vault.git
+README.md size: 6844 bytes
+Source files: 0
+Source lines: 0
+Commits: 6
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-vault/vault
+FE: —
+BE: —
+Folder date (mtime): 2025-02-16 20:11:04 -0700
+origin  git@github.com:sbecker11/workspace-vault.git
+README.md size: 5283 bytes
+Source files: 0
+Source lines: 0
+Commits: 4
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-webui/open-webui
+FE: SvelteKit, Svelte, Vite
+BE: SvelteKit (Node), FastAPI (Python), Starlette (Python), Uvicorn (Python)
+Folder date (mtime): 2025-05-30 14:46:37 -0600
+origin  https://github.com/open-webui/open-webui.git
+README.md size: 15001 bytes
+Source files: 604
+Source lines: 207250
+Commits: 11002
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-flock/resume-pa
+FE: —
+BE: Python (pyproject)
+Folder date (mtime): 2026-03-22 19:53:51 -0600
+origin  https://github.com/sbecker11/resume-parser.git
+README.md size: 7972 bytes
+Source files: 31
+Source lines: 5242
+Commits: 2
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-flock/resume-flock
+FE: Vite, Vue
+BE: Express (Node)
+Folder date (mtime): 2026-03-22 21:10:56 -0600
+origin  git@github.com:sbecker11/resume-flyer.git
+README.md size: 56600 bytes
+Source files: 7
+Source lines: 54471
+Commits: 1138
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-flock/flock-of-postcards
+FE: —
+BE: —
+Folder date (mtime): 2026-03-02 20:29:37 -0700
+origin  git@github.com:sbecker11/flock-of-postcards.git
+README.md size: 11813 bytes
+Source files: 20
+Source l: 7811
+Commits: 490
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-telerus/telerus
+FE: React
+BE: Express (Node)
+Folder date (mtime): 2025-10-21 14:42:44 -0600
+origin  git@github.com:sbecker11/telerus.git
+README.md size: 6778 bytes
+Source files: 12
+Source lines: 654
+Commits: 1
+---------------------------------------------------------------------
+/Users/sbecker11/workspace-observable/dataviz-portfolio
+FE: —
+BE: —
+Folder date (mtime): 2026-02-24 10:00:41 -0700
+origin  git@github.com:sbecker11/datavis-portfolio.git
+README.md size: 1960 bytes
+Source files: 5
+Source lines: 312
+Commits: 1
+

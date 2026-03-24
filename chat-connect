@@ -1,0 +1,1 @@
+nc -v macmini 12345

@@ -23,9 +23,9 @@ version_compare() {
 }
 
 if ! version_compare; then
-echo "Fail: bash version:$bash_version is not 5.2 or higher." >&2
+echo "Fail: bash version:${bash_version} is not 5.2 or higher." >&2
     exit 1
 else
-    echo "Ok: bash version:$bash_version is 5.2 or higher." >&2 
+    echo "Ok: bash version:${bash_version} is 5.2 or higher." >&2 
     exit 0
 fi
