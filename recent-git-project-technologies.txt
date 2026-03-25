@@ -1,0 +1,27 @@
+Derived from: recent-git-projects.txt
+Each comma-separated tag on an FE:/BE: line counts once per project.
+Sorted by count (descending), then technology name.
+
+Frontend (FE)
+----------------------------------------
+ 10  React
+  9  Vite
+  7  TypeScript
+  2  Vue
+  1  Next.js
+  1  Streamlit (Python)
+  1  Svelte
+  1  SvelteKit
+
+Backend (BE)
+----------------------------------------
+ 11  Express (Node)
+  6  Python (pyproject)
+  3  Python (deps file)
+  2  Go
+  1  FastAPI (Python)
+  1  Next.js (API / Node)
+  1  Starlette (Python)
+  1  SvelteKit (Node)
+  1  Tornado (Python)
+  1  Uvicorn (Python)

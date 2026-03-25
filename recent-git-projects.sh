@@ -7,7 +7,7 @@
 #   2) have README.md
 #   3) have origin pointing at github.com (or git@github.com:)
 #
-# After each path: FE, BE, folder mtime, GitHub https repo URL, README bytes, source stats, commits (--all)
+# After each path: FE, BE, folder mtime, url: https://github.com/... (browser-openable), README bytes, source stats, commits (--all)
 # (RECENT_GIT_PATHS_ONLY=1 → path only).
 # Set RECENT_GIT_CUTOFF, RECENT_GIT_PATTERN as needed.
 
@@ -67,6 +67,7 @@ except Exception:
 
 classify_npm_key() {
   local k="$1"
+  local pkg="${2:-}"
   case "$k" in
     react-native|react-native-*)
       add_fe "React Native"
@@ -144,6 +145,16 @@ classify_npm_key() {
     socket.io)
       add_be "Socket.io"
       ;;
+    typescript)
+      case "$pkg" in
+        */server/package.json|*/api/package.json)
+          add_be "TypeScript"
+          ;;
+        *)
+          add_fe "TypeScript"
+          ;;
+      esac
+      ;;
     esac
 }
 
@@ -162,7 +173,7 @@ scan_package_json_tree() {
     local key
     while IFS= read -r key; do
       [[ -n "$key" ]] || continue
-      classify_npm_key "$key"
+      classify_npm_key "$key" "$f"
     done < <(package_dep_keys "$f")
   done
 }
@@ -250,6 +261,19 @@ scan_node_entry_hint() {
   done
 }
 
+# If package.json did not list typescript (or only nested manifests were scanned), still flag TS.
+infer_typescript_if_missing() {
+  local root="$1" t tracked
+  for t in "${fe_tags[@]:-}"; do [[ "$t" == "TypeScript" ]] && return 0; done
+  for t in "${be_tags[@]:-}"; do [[ "$t" == "TypeScript" ]] && return 0; done
+  if [[ -f "$root/tsconfig.json" ]]; then
+    add_fe "TypeScript"
+    return 0
+  fi
+  tracked=$(git -C "$root" ls-files '*.ts' '*.tsx' 2>/dev/null) || tracked=
+  [[ -n "$tracked" ]] && add_fe "TypeScript"
+}
+
 print_fe_be_lines() {
   local root="$1"
   fe_tags=()
@@ -260,6 +284,7 @@ print_fe_be_lines() {
   scan_ruby "$root"
   scan_go_rust_php "$root"
   scan_node_entry_hint "$root"
+  infer_typescript_if_missing "$root"
 
   local fe be
   if [[ ${#fe_tags[@]} -eq 0 ]]; then
@@ -329,8 +354,9 @@ github_repo_https_url() {
   u="$raw"
   u="${u%.git}"
   case "$u" in
-    git@github.com:*)
-      u=${u#git@github.com:}
+    git@github.com:*|github.com:*)
+      u=${u#git@}
+      u=${u#github.com:}
       o=${u%%/*}
       r=${u#*/}
       r=${r%%/*}
@@ -375,9 +401,9 @@ print_project_meta() {
   local origin_url web_url
   origin_url=$(git -C "$root" remote get-url origin 2>/dev/null) || origin_url=
   if web_url=$(github_repo_https_url "$origin_url"); then
-    printf '%s\n' "$web_url"
+    printf 'url: %s\n' "$web_url"
   else
-    printf '—\n'
+    printf 'url: —\n'
   fi
   local readme="$root/README.md"
   local bytes
